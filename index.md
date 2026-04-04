@@ -20,7 +20,7 @@ title: Home
   <img src="assets/member2.jpg" alt="Member 2 photo" width="150" style="border-radius: 50%;">
   <h3>Zhifan Guo</h3>
   <p><em>PhD, Media Arts and Technology</em></p>
-  <p>A short bio — background, interests, what you're excited to explore in this course.</p>
+  <p>Hi there! I am Zhifan, a first-year PhD student in MAT. With a background in industrial design, I enjoys crafting poetic and delightful connections with the physical world. She is passionate to explore how computational tools could augment our curiosity, creativity, and sustainable practices in interaction with tangible artifacts.</p>
 </div>
 
 <!-- Copy the block above to add more team members -->
