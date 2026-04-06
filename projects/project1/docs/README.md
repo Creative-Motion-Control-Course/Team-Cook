@@ -16,10 +16,10 @@ For the input, we plan to reference the online [Moiré Museum](https://www.sqrt.
 
 This sketch describes the machine design:
 
- <img src="projects/project1/docs/assets/project 1 sketch.jpg" width="500">
+ <img src="assets/project 1 sketch.jpg" width="500">
 
 These are some visual experiments we tried:
 
- <img src="projects/project1/docs/assets/experiment_1.gif" height = 200 style = "margin-right:10px;">
- <img src="projects/project1/docs/assets/experiment_2.gif" height = 200 style = "margin-right:10px;">
- <img src="projects/project1/docs/assets/experiment_3.gif" height = 200 style = "margin-right:10px;">
+ <img src="assets/experiment_1.gif" height = 200 style = "margin-right:10px;">
+ <img src="assets/experiment_2.gif" height = 200 style = "margin-right:10px;">
+ <img src="assets/experiment_3.gif" height = 200 style = "margin-right:10px;">
