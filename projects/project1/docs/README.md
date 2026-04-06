@@ -21,7 +21,7 @@ This sketch describes the machine design:
 These are some visual experiments we tried:
 
 <p align = "left">
- <img src="assets/experiment_1.gif" height = 200 style = "margin-right:10px;">
- <img src="assets/experiment_2.gif" height = 200 style = "margin-right:10px;">
- <img src="assets/experiment_3.gif" height = 200 style = "margin-right:10px;">
+ <img src="assets/experiment_1.gif" height = 200 style = "margin-right:20px;">
+ <img src="assets/experiment_2.gif" height = 200 style = "margin-right:20px;">
+ <img src="assets/experiment_3.gif" height = 200 style = "margin-right:20px;">
 </p>
