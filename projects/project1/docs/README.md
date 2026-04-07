@@ -1,6 +1,6 @@
 # Project 1 - Proposal
 
-We envision an interactive Moiré pattern plotter that enables live animation on moiré patterns during the CNC process.
+We envision **an interactive Moiré pattern plotter** that enables **live animation** on moiré patterns during the CNC process.
 
 [Moiré patterns](https://en.wikipedia.org/wiki/Moir%C3%A9_pattern#) are visual interference patterns formed by layering similar patterns, which create the illusion of motion when there is relative movement between the layers. Using a live-controlled plotter, we enable real-time parameter adjustment, generating traditionally geometric Moiré patterns organically while supporting diverse drawing media.
 
