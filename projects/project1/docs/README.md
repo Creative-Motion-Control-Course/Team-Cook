@@ -16,7 +16,7 @@ For the input, we plan to reference the online [Moiré Museum](https://www.sqrt.
 
 This sketch describes the machine design:
 
- <img src="assets/project 1 sketch.jpg" width="500">
+ <img src="assets/project 1 sketch.jpg" width="1000">
 
 These are some visual experiments we tried:
 
