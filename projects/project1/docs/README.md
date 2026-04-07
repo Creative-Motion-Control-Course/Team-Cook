@@ -10,7 +10,7 @@ We envision an interactive Moiré pattern plotter that enables live animation on
 <img src = "https://upload.wikimedia.org/wikipedia/commons/0/08/070320-a6-shape-moire-pr-gt-pb.gif" height = 200 style = "margin-right:10px;">
 </p>
 
-We want to design a system that allows the users to first personalize their preferred patterns through a simple online or physical (if time allows) interface, then let the plotter print them layer by layer. After the first layer is printed, it can be placed beneath a transparent moving plate that can translate or rotate. A second transparent plate above holds the printing surface. Through the relative motion between these layers, users can directly observe the animated effect during the second printing. Additional layers can also be added.
+We want to design a system that allows the users to first personalize their preferred patterns through a simple online or physical (if time allows) interface, then let the plotter print them layer by layer onto transparency film paper. After the first layer is printed, it can be placed beneath a transparent moving plate that can translate or rotate. A second transparent plate above holds the printing surface. Through the relative motion between these layers, users can directly observe the animated effect during the second printing. Additional layers can also be added.
 
 For the input, we plan to reference the online [Moiré Museum](https://www.sqrt.ch/museum) to design the parameters and define the types available for users to choose from. The pattern types can include line-based, grid-based, radial, and concentric patterns, with transformations (rotation, translation) and parameters (scaling, spacing, line thickness, density). Users can adjust them ideally on a physical interface with playful buttons and sliders that can preview the results in real-time.
 
@@ -21,7 +21,7 @@ This sketch describes the machine design:
 These are some visual experiments we tried:
 
 <p align = "left">
- <img src="assets/experiment_1.gif" height = 200 style = "margin-right:20px;">
- <img src="assets/experiment_2.gif" height = 200 style = "margin-right:20px;">
- <img src="assets/experiment_3.gif" height = 200 style = "margin-right:20px;">
+ <img src="assets/experiment_1.gif" height = 300 style = "margin-right:20px;">
+ <img src="assets/experiment_2.gif" height = 300 style = "margin-right:20px;">
+ <img src="assets/experiment_3.gif" height = 300 style = "margin-right:20px;">
 </p>
