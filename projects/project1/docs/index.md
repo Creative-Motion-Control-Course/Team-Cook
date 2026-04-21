@@ -3,7 +3,7 @@ layout: default
 title: "Interactive Moiré Pattern Plotter"
 ---
 
-# Project 1: [Your Project Title]
+# Project 1: Interactive Moiré Pattern Plotter
 
 ## Concept
 
