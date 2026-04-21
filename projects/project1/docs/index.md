@@ -385,7 +385,11 @@ void draw_squares_horizontal() {
 
 ## Results
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SYvDYnnxaHw?si=I6wo6qa9VVEw1yqU" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/SYvDYnnxaHw"
+frameborder="0"
+allowfullscreen>
+</iframe>
 
 Transparent platform display - to be continued...
 
