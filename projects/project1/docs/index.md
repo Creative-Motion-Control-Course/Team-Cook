@@ -50,25 +50,25 @@ We began by defining the machine setup, the pattern types, the drawing media, an
 
 We initially aimed to use the wave generators to draw spiral patterns. The system operates in polar coordinates, where both the angle and the radius are driven continuously. To control the motion, we use two velocity generators: one for the angle and one for the radius, and map the output through polar-to-Cartesian kinematics to drive the plotter. In this setup, the plotter first produces spiral patterns. By adding z-axis control to lift the pen at intervals and adjusting the relative speeds of the two velocity generators, we were able to segment the spiral and produce paths that visually similar to concentric circles. By further modifying the z movement, the system can also generate discrete concentric curves or even dots. For the interaction, users can adjust the spacing, wave scale, and line length.******
 
-<img src="assets/spiral-1.jpg" height="300">
-<img src="assets/spiral-2.jpg" height="300">
-<img src="assets/concentric-circles-1.jpg" height="300">
-<img src="assets/concentric-circles-2.jpg" height="300">
+<img src="assets/spiral-1.JPG" height="300">
+<img src="assets/spiral-2.JPG" height="300">
+<img src="assets/concentric-circles-1.JPG" height="300">
+<img src="assets/concentric-circles-2.JPG" height="300">
 
 We then worked on grid patterns. After learning the time-based interpolator (TBI), the implementation became much simpler. We used a for loop to generate evenly spaced lines to form the grid. By using the wave generator, the straight lines can be distorted. With additional z-axis control, the length of each line can vary, creating a lattice-like effect. One limitation we encountered is that in StepDance, the for loop can only support up to 25 iterations, which limits the resolution and density of the grid. For the interaction, users can adjust the spacing, wave scale, line count, and line length.******
 
-<img src="assets/grid-1.jpg" height="300">
-<img src="assets/grid-2.jpg" height="300">
-<img src="assets/grid-3.jpg" height="300">
+<img src="assets/grid-1.JPG" height="300">
+<img src="assets/grid-2.JPG" height="300">
+<img src="assets/grid-3.JPG" height="300">
 
 By defining x and y in the TBI to distribute points evenly around a center, we are able to generate radial lines. After adding the wave generator, we observed that the distortion mainly occurred along one direction, while the other direction appeared compressed, resulting in uneven patterns. To address this, we modified the TBI using a polar-coordinate approach*****, which provides more balanced control over angular and radial motion. For interaction, users can adjust the spiral angle and line length.
 
-<img src="assets/radial-1.jpg" height="300">
+<img src="assets/radial-1.JPG" height="300">
 
 We finally worked on concentric square patterns. Using the TBI, we defined square paths and used a for loop to gradually increase the side length, generating multiple layers of squares from the center outward. Z-axis movement is used to lift the pen between each square. By adding a wave generator, the square edges can also be distorted. For interaction, users can adjust the spacing, wave scale, line count, and line length.******
 
-<img src="assets/concentric-square-1.jpg" height="300">
-<img src="assets/concentric-square-2.jpg" height="300">
+<img src="assets/concentric-square-1.JPG" height="300">
+<img src="assets/concentric-square-2.JPG" height="300">
 
 To combine everything, we organized each pattern into separate functions and used a button to toggle between different modes.******
 
@@ -76,7 +76,7 @@ To combine everything, we organized each pattern into separate functions and use
 
 We used two buttons and four potentiometers (two sliders and two knobs) as input controls for adjusting system parameters. One button is used to switch between pattern types, while the other controls the start and stop of the machine.
 
-![Hardware setup](assets/placeholder-1.jpg)
+![Hardware setup](assets/placeholder-1.JPG)
 
 ### Code Overview
 
