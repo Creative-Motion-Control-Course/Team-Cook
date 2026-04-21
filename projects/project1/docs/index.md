@@ -60,8 +60,8 @@ We initially aimed to use the wave generators to draw spiral patterns. The syste
 We then worked on grid patterns. After learning the time-based interpolator (TBI), the implementation became much simpler. We used a for loop to generate evenly spaced lines to form the grid. By using the wave generator, the straight lines can be distorted. With additional z-axis control, the length of each line can vary, creating a lattice-like effect. One limitation we encountered is that in StepDance, the for loop can only support up to 25 iterations, which limits the resolution and density of the grid. For the interaction, users can adjust the spacing, wave scale, line count, and line length.******
 
 <p align = "left">
-<img src="assets/grid-1.JPG" height="300">
 <img src="assets/grid-2.JPG" height="300">
+<img src="assets/grid-1.JPG" height="300">
 <img src="assets/grid-3.JPG" height="300">
 </p>
 
