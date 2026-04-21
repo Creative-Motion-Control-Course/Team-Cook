@@ -93,7 +93,7 @@ To combine everything, we organized each pattern into separate functions and use
 
 We used two buttons and four potentiometers (two sliders and two knobs) as input controls for adjusting system parameters. One button is used to switch between pattern types, while the other controls the start and stop of the machine.
 
-![Hardware setup](assets/placeholder.JPG)
+![Hardware setup](assets/placeholder.jpg)
 
 ### Code Overview
 
