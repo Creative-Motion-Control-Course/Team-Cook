@@ -107,3 +107,5 @@ Before sending it to the machine, the user can adjust the hole count or hole spa
 5) **Preview fidelity across brushes.** Some brushes like curve are easy to preview faithfully. Others like parallel-line are harder, since they need to interpret two strokes as boundaries. We may need a different preview strategy for each brush.
 
 6) **Balance the functionality and simplicity of the interface**
+
+7) **Mechanism with punch needle**
