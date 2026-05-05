@@ -5,7 +5,7 @@
 Existing approaches to fabricating embroidery artifacts include manually marking dots on grid paper and designing patterns in CAD software (Figure 1). However, these methods either lack precision or make it difficult to incorporate parametric variations and transformations. In context-rich applications (e.g., photo or painted substrates), CAD-based approaches struggle to accommodate unpredictable surface features, or often leading to alignment issues. In human-computer interaction, prior work has explored 3D printing parametrically generated embroidery stencils, but they can only be used on fabric and unable to modify the stitches once applied.
 
 <div align="center">
-<img src = "assets/figure-1.PNG" height = 350>
+<img src = "assets/figure-1.png" height = 350>
 
 *Figure 1. Existing approaches to fabricating embroidery artifacts.*
 </div>
@@ -15,7 +15,7 @@ Moreover, translating desired patterns into hole maps requires drafting expertis
 Featuring **precise hole placement** and **image-to-hole translation**, our tool aims to serve paper embroidery artists who want to expand their work in a **procedural, live, and context-integrated** way. We also envision this tool to support drawing artists, handmade book, card makers, and hobbyists who want to bring the fiber texture of embroidery into their flat work. In Figure 2, we map existing paper embroidery artifacts onto a four-dimensional space. Our approach primarily supports the upper-left region (abstract, highly context-integrated work), while also accommodating low-context applications and more free-form stitching. We hope to extend the visual vocabulary people can participate in, opening it to **photographic images**, **pattern exploration**, and [**experimental animation**](https://www.youtube.com/watch?v=1SXZJs26UKY).
 
 <div align="center">
-<img src = "assets/figure-2.PNG" height = 500>
+<img src = "assets/figure-2.png" height = 500>
 
 *Figure 2. Mapping of existing paper embroidery artifacts onto a four-dimensional design space.*
 </div>
@@ -34,7 +34,7 @@ The hard part of paper embroidery is the creative translation from a visual idea
 As shown in Figure 3, our interface consists of three components: a pantograph that allows the machine to “read” user-defined drawing or hole-punching paths, and a control station with buttons and sliders for generating geometric patterns and adjusting hole-map parameters. An additional button allows users to send the pantograph path directly to the plotter for execution. The plotter and pantograph will share the same working area for the user to directly trace strokes on paper artefacts.
 
 <div align="center">
-<img src = "assets/figure-3.JPG" height = 300>
+<img src = "assets/figure-3.jpg" height = 300>
 
 *Figure 3. The three components of our interface: a pantograph, a control station, and a plotter.*
 </div>
@@ -44,7 +44,7 @@ The system supports two output modes: drawing tools and a hole puncher. The draw
 Our workflow supports a flexible, layered, and hybrid process (Figure 4), allowing users to work fully by hand, use the machine solely for hole-map planning, or delegate the entire process to achieve fully geometric and parametric results.
 
 <div align="center">
-<img src = "assets/figure-4.PNG" height = 300>
+<img src = "assets/figure-4.png" height = 300>
 
 *Figure 4. Overview of our flexible, layered, and hybrid workflow.*
 </div>
@@ -61,7 +61,7 @@ The user can trace strokes through a pantograph, selecting which areas they want
 Curve and Parallel methods support an optional **graduated-spacing modifier**, which allows the user to control the rate at which hole spacing increases or decreases along the stroke.
 
 <div align="center">
-<img src = "assets/figure-5.PNG" height = 400>
+<img src = "assets/figure-5.png" height = 400>
 
 *Figure 5. Embroidery results produced by our poking brush using parallel and curved methods.*
 </div>
