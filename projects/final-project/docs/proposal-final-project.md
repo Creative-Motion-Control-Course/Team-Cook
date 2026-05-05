@@ -5,7 +5,7 @@
 Existing approaches to fabricating embroidery artifacts include manually marking dots on grid paper and designing patterns in CAD software (Figure 1). However, these methods either lack precision or make it difficult to incorporate parametric variations and transformations. In context-rich applications (e.g., photo or painted substrates), CAD-based approaches struggle to accommodate unpredictable surface features, or often leading to alignment issues. In human-computer interaction, prior work has explored 3D printing parametrically generated embroidery stencils, but they can only be used on fabric and unable to modify the stitches once applied.
 
 <div align="center">
-<img src = "assets/Frame 4.png" height = 350>
+<img src = "assets/figure-1.png" height = 350>
 
 *Figure 1. Existing approaches to fabricating embroidery artifacts.*
 </div>
