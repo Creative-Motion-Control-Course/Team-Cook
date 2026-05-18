@@ -32,9 +32,9 @@ title: Home
 | Project | Description |
 |---------|-------------|
 | [Project 1 - Proposal](projects/project1/docs/proposal-project-1.md) | *An interactive CNC plotter system* |
-| [Project 1](projects/project1/docs/) | *An interactive CNC plotter system* |
+| [Project 1](projects/project1/docs/index.md) | *An interactive CNC plotter system* |
 | [Final Project - Proposal](projects/final-project/docs/proposal-final-project.md) | *An interface for paper embroidery* |
-| [Project 2](projects/project2/docs/) | *An interface for paper embroidery* |
+| [Project 2](projects/project2/docs/index.md) | *An interface for paper embroidery* |
 <!-- Add rows as you complete more projects:
 | [Project 2](projects/project2/docs/) | *Brief description of project 2* |
 | [Project 3](projects/project3/docs/) | *Brief description of project 3* |
