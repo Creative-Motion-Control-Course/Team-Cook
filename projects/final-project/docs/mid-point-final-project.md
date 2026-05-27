@@ -20,8 +20,8 @@ Time: Monday, 25 May, 3:00 pm - 4:00 pm
 We started by testing the five-bar pantograph to see if it could map to the AxiDraw movement, but due to difficulty calibrating the mapping, we designed our own pantograph using two encoders vertically stacked together: the bottom encoder provides angle input, and the top encoder provides radius input through a rack-and-pinion mechanism. The polar coordinates input was transferred to Cartesian coordinates in the code. We made the CAD for both encoders’ housings and the pinion-rack mechanism in SolidWorks. After the first version, we improved the linear rail for the rack, as well as added endstops for the pantograph’s homing position.
 
 <p align = "left">
-<img src="assets/pantograph-1.JPG" height="300">
-<img src="assets/pantograph-2.JPG" height="300">
+<img src="assets/pantograph-1.jpg" height="300">
+<img src="assets/pantograph-2.jpg" height="300">
 </p>
 
 Here is a video of their synchronized movement:
@@ -279,7 +279,7 @@ Here is a demonstration video:
 
 We CAD-modeled a weight that sits on top of the paper embroidery needle. The lid twists open so the user can place coins or other objects inside to increase the weight as needed.
 
-<img src="assets/punch-1.PNG" height="300">
+<img src="assets/punch-1.png" height="300">
 
 
 ## Enclosure
@@ -287,8 +287,8 @@ We CAD-modeled a weight that sits on top of the paper embroidery needle. The lid
 We designed a case in CAD that houses both the Stepdance board and the interface:
 
 <p align = "left">
-<img src="assets/case-1.PNG" height="300">
-<img src="assets/case-2.PNG" height="300">
+<img src="assets/case-1.png" height="300">
+<img src="assets/case-2.png" height="300">
 </p>
 
 
