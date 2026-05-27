@@ -1,6 +1,6 @@
-Mid-point
+# Final Project: Mid-point
 
-# Peer Review
+## Peer Review
 
 Time: Monday, 25 May, 3:00 pm - 4:00 pm
 
@@ -13,9 +13,9 @@ Time: Monday, 25 May, 3:00 pm - 4:00 pm
 
 - Team Cook shared their current progress, focusing primarily on record-and-playback movement on the AxiDraw via the pantograph interface. They mentioned one current difficulty: the playback trace doesn't exactly replicate the recorded input. They also explained their rationale for choosing the polar pantograph over the five-bar alternative. In response, Team Pancho tried out the pantograph-to-AxiDraw system and suggested improving the stability of the pantograph's pen, making it more responsive (e.g., the mapping issues that show up when drawing a circle), and possibly adding a digital interface to make the control parameters more direct.
 
-# Progress
+## Progress
 
-## Pantograph
+### Pantograph
 
 We started by testing the five-bar pantograph to see if it could map to the AxiDraw movement, but due to difficulty calibrating the mapping, we designed our own pantograph using two encoders vertically stacked together: the bottom encoder provides angle input, and the top encoder provides radius input through a rack-and-pinion mechanism. The polar coordinates input was transferred to Cartesian coordinates in the code. We made the CAD for both encoders’ housings and the pinion-rack mechanism in SolidWorks. After the first version, we improved the linear rail for the rack, as well as added endstops for the pantograph’s homing position.
 
@@ -28,7 +28,7 @@ Here is a video of their synchronized movement:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/boFGgTDFiis" frameborder="0" allowfullscreen></iframe>
 
-#Coding
+## Coding
 
 We referenced the recording and playback example in the library to first record the path of the pantograph and play it back on the AxiDraw. Pressing the record button starts Stepdance recording the pantograph's path while the AxiDraw is disabled; pressing the same button again stops the recording. Pressing the other button triggers playback, and the AxiDraw redraws the recorded path. We also added a slider to adjust the overall mapping scale.
 
@@ -275,14 +275,14 @@ Here is a demonstration video:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/X0m5Kvh0e3M" frameborder="0" allowfullscreen></iframe>
 
-## Punch
+### Punch
 
 We CAD-modeled a weight that sits on top of the paper embroidery needle. The lid twists open so the user can place coins or other objects inside to increase the weight as needed.
 
 <img src="assets/punch-1.png" height="300">
 
 
-## Enclosure
+### Enclosure
 
 We designed a case in CAD that houses both the Stepdance board and the interface:
 
@@ -293,7 +293,7 @@ We designed a case in CAD that houses both the Stepdance board and the interface
 
 
 
-# Next Steps
+## Next Steps
 
 1. Mapping: the playback trace doesn't exactly match the recorded input. We're still working on it.
 
