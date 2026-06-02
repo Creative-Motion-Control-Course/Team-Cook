@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>interference</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ef; --surface: #ffffff; --surface2: #efece6; --border: #d9d4cc;
+  --accent: #1d4ed8; --accent2: #d11f2a; --muted: #8a857d; --text: #14110d;
+  --text2: #4a463f; --warn: #e0a020;
+  --c-red: #d11f2a; --c-blue: #1d4ed8; --c-cyan: #19b6d9; --c-yellow: #e8c020;
+  --c-magenta: #c84bb0; --c-black: #1a1a1a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 14px; height: 100vh; overflow: hidden;
+  display: grid; grid-template-rows: 50px 1fr;
+}
+header { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+.logo { font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+.header-mid { display: flex; gap: 2px; }
+.mode-tab { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.06em; padding: 5px 12px; border: 1px solid transparent; background: transparent; color: var(--muted); cursor: pointer; text-transform: uppercase; transition: all 0.12s; }
+.mode-tab:hover { color: var(--text); border-color: var(--border); }
+.mode-tab.active { color: #fff; background: var(--accent); border-color: var(--accent); }
+.mode-tab:disabled { opacity: 0.35; cursor: not-allowed; }
+.header-right { display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted); }
+.conn-btn { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.06em; padding: 4px 12px; border: 1px solid var(--accent2); background: transparent; color: var(--accent2); cursor: pointer; text-transform: uppercase; transition: all 0.12s; }
+.conn-btn:hover { background: var(--accent2); color: #fff; }
+.conn-btn.connected { border-color: var(--accent); color: var(--accent); }
+.conn-btn.connected:hover { background: var(--accent); color: #fff; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.dot.drawing { background: var(--warn); }
+.dot.connected-dot { background: var(--accent); }
+main { display: grid; grid-template-columns: 260px 1fr 320px; overflow: hidden; }
+#canvas-wrap { position: relative; display: flex; align-items: center; justify-content: center; background: var(--bg); border-right: 1px solid var(--border); }
+.canvas-label { position: absolute; bottom: 12px; left: 14px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.locked-badge { position: absolute; top: 12px; left: 14px; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--warn); letter-spacing: 0.08em; text-transform: uppercase; display: none; }
+.locked-badge.show { display: block; }
+aside { display: flex; flex-direction: column; background: var(--surface); overflow-y: auto; }
+aside.left-panel { border-right: 1px solid var(--border); }
+aside.right-panel { border-left: 1px solid var(--border); }
+aside::-webkit-scrollbar { width: 4px; }
+aside::-webkit-scrollbar-thumb { background: var(--border); }
+.section { border-bottom: 1px solid var(--border); padding: 11px 14px; flex-shrink: 0; }
+.sec-label { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 9px; }
+.ctrl-row { margin-bottom: 12px; }
+.ctrl-row:last-child { margin-bottom: 0; }
+.ctrl-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+.ctrl-port { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+.ctrl-val { font-family: 'Space Mono', monospace; font-size: 14px; color: var(--accent); font-weight: 700; }
+.ctrl-fn { font-size: 13px; color: var(--text2); margin-bottom: 5px; }
+input[type=range] { -webkit-appearance: none; width: 100%; height: 3px; background: var(--border); outline: none; cursor: pointer; border-radius: 2px; }
+input[type=range].slider-pot::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 18px; border-radius: 2px; background: var(--accent); cursor: pointer; }
+input[type=range].knob-pot::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent2); cursor: pointer; }
+input[type=range].serial-range::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; border-radius: 50%; background: var(--accent2); cursor: pointer; }
+input[type=range]:disabled { opacity: 0.3; cursor: not-allowed; }
+.serial-row { margin-bottom: 6px; }
+.serial-head { display: flex; justify-content: space-between; margin-bottom: 2px; }
+.serial-name { font-size: 12px; color: var(--text2); }
+.serial-val { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--accent2); font-weight: 700; }
+.btn-section { padding: 11px 14px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.hw-btn { width: 100%; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.05em; padding: 8px 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; text-transform: uppercase; transition: all 0.1s; text-align: center; margin-bottom: 6px; user-select: none; }
+.hw-btn:hover { border-color: var(--accent); color: var(--text); }
+.hw-btn.motor-on { background: #e8f4ec; color: var(--accent); border-color: var(--accent); }
+.hw-btn.pressing { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.log-section { padding: 10px 14px; display: flex; flex-direction: column; min-height: 160px; }
+#log-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; min-height: 120px; max-height: 220px; }
+#log-list::-webkit-scrollbar { width: 2px; }
+#log-list::-webkit-scrollbar-thumb { background: var(--border); }
+.log-entry { font-family: 'Space Mono', monospace; font-size: 10px; color: #bbb; line-height: 1.5; word-break: break-all; }
+.log-entry.fresh-serial { color: var(--accent2); }
+.log-entry.fresh-sys { color: var(--text2); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">interference</div>
+  <div class="header-mid" id="mode-tabs">
+    <button class="mode-tab active" data-mode="0">Grid</button>
+    <button class="mode-tab" data-mode="1">Circle</button>
+    <button class="mode-tab" data-mode="2">Square</button>
+    <button class="mode-tab" data-mode="3">Radial</button>
+  </div>
+  <div class="header-right">
+    <button class="conn-btn" id="conn-btn">Connect</button>
+    <div class="dot" id="status-dot"></div>
+    <span id="status-text">idle</span>
+  </div>
+</header>
+
+<main>
+  <aside class="left-panel">
+    <div class="section">
+      <div class="sec-label">Serial: before drawing</div>
+      <div id="serial-controls"></div>
+    </div>
+  </aside>
+
+  <div id="canvas-wrap">
+    <div id="p5-canvas"></div>
+    <div class="canvas-label" id="canvas-label">grid pattern</div>
+    <div class="locked-badge" id="locked-badge">⬤ drawing: locked</div>
+  </div>
+
+  <aside class="right-panel">
+    <div class="section">
+      <div class="sec-label">Potentiometers: real-time</div>
+      <div id="pot-controls"></div>
+    </div>
+    <div class="btn-section">
+      <div class="sec-label">Hardware buttons</div>
+      <div class="hw-btn" id="btn-motor">Button 1: motor off</div>
+      <div class="hw-btn" id="btn2">Button 2: hold to draw</div>
+      <div class="btn-hint" id="btn-hint"></div>
+    </div>
+    <div class="log-section">
+      <div class="sec-label" style="margin-bottom:7px">Command log</div>
+      <div id="log-list"></div>
+    </div>
+  </aside>
+</main>
+
+<script>
+(function() {
+  'use strict';
+
+  let mode = 0;
+  let drawing = false;
+  let motorOn = false;
+
+  const POT_TYPE = { a1:'slider', a2:'slider', a3:'knob', a4:'knob' };
+
+  // pen colors pulled from the plotted artwork
+  const PEN_COLORS = {
+    r: [209, 31, 42],    // red
+    b: [29, 78, 216],    // cobalt blue
+    c: [25, 182, 217],   // cyan
+    y: [232, 192, 32],   // yellow
+    m: [200, 75, 176],   // magenta
+    k: [26, 26, 26],     // black
+    g: [29, 78, 216],    // legacy 'g' -> blue fallback
+  };
+  const analog = { a1: 12, a2: 0, a3: 1.5, a4: 2 };
+  const serial = {
+    drawing_area: 60, velocity: 10,
+    wave_x_f: 2, wave_x_a: 2, wave_y_f: 2, wave_y_a: 2,
+    basic_spacing: 0.15, spacing_var_f: 0.1, spacing_var_a: 0.2,
+  };
+
+  const modeNames = ['grid pattern', 'circle (spiral)', 'centric square', 'radial'];
+
+  const potDefs = [
+    [
+      { key:'a1', port:'analog_1 · slider', fn:'line count', min:4, max:25, step:1, fmt:v=>Math.round(v) },
+      { key:'a2', port:'analog_2 · slider', fn:'z-wave freq (pen up/down)', min:0, max:3, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a3', port:'analog_3 · knob', fn:'amplitude scaler ×', min:0, max:3, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a4', port:'analog_4 · knob', fn:'frequency scaler ×', min:0, max:4, step:0.1, fmt:v=>v.toFixed(1) },
+    ],
+    [
+      { key:'a1', port:'analog_1 · slider', fn:'radius wave freq (Hz)', min:0, max:15, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a2', port:'analog_2 · slider', fn:'z-wave freq (pen up/down)', min:0, max:3, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a3', port:'analog_3 · knob', fn:'radius wave amplitude', min:0, max:15, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a4', port:'analog_4 · knob', fn:'turning speed (rev/s)', min:0, max:2, step:0.05, fmt:v=>v.toFixed(2) },
+    ],
+    [
+      { key:'a1', port:'analog_1 · slider', fn:'square count', min:4, max:24, step:1, fmt:v=>Math.round(v) },
+      { key:'a2', port:'analog_2 · slider', fn:'z-wave freq (pen up/down)', min:0, max:3, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a3', port:'analog_3 · knob', fn:'amplitude scaler ×', min:0, max:3, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a4', port:'analog_4 · knob', fn:'frequency scaler ×', min:0, max:4, step:0.1, fmt:v=>v.toFixed(1) },
+    ],
+    [
+      { key:'a1', port:'analog_1 · slider', fn:'line count', min:3, max:25, step:1, fmt:v=>Math.round(v) },
+      { key:'a2', port:'analog_2 · slider', fn:'z-wave freq (pen up/down)', min:0, max:3, step:0.1, fmt:v=>v.toFixed(1) },
+      { key:'a3', port:'analog_3 · knob', fn:'angle deviation', min:0, max:1.5, step:0.05, fmt:v=>v.toFixed(2) },
+      { key:'a4', port:'analog_4 · knob', fn:'line length / drawing area', min:10, max:150, step:1, fmt:v=>Math.round(v) },
+    ],
+  ];
+
+  const serialDefs = [
+    [
+      { key:'drawing_area', label:'drawing_area (mm)', min:10, max:150, step:1, cmd:v=>`{"name":"set_drawing_area","args":[${Math.round(v)}]}` },
+      { key:'velocity', label:'velocity', min:1, max:40, step:1, cmd:v=>`{"name":"set_drawing_velocity","args":[${Math.round(v)}]}` },
+      { key:'wave_x_f', label:'wave X freq', min:0, max:5, step:0.5, cmd:null },
+      { key:'wave_x_a', label:'wave X amp', min:0, max:5, step:0.5, cmd:null },
+      { key:'wave_y_f', label:'wave Y freq', min:0, max:5, step:0.5, cmd:null },
+      { key:'wave_y_a', label:'wave Y amp', min:0, max:5, step:0.5, cmd:null },
+    ],
+    [
+      { key:'basic_spacing', label:'basic_spacing', min:0.01, max:0.5, step:0.01, cmd:v=>`{"name":"set_basic_spacing","args":[${v.toFixed(2)}]}` },
+      { key:'spacing_var_f', label:'spacing_var freq', min:0, max:1, step:0.01, cmd:()=>`{"name":"set_spacing_variation","args":[${serial.spacing_var_f.toFixed(2)},${serial.spacing_var_a.toFixed(2)}]}` },
+      { key:'spacing_var_a', label:'spacing_var amp', min:0, max:0.5, step:0.01, cmd:()=>`{"name":"set_spacing_variation","args":[${serial.spacing_var_f.toFixed(2)},${serial.spacing_var_a.toFixed(2)}]}` },
+    ],
+    [
+      { key:'drawing_area', label:'drawing_area (mm)', min:10, max:150, step:1, cmd:v=>`{"name":"set_drawing_area","args":[${Math.round(v)}]}` },
+      { key:'velocity', label:'velocity', min:1, max:40, step:1, cmd:v=>`{"name":"set_drawing_velocity","args":[${Math.round(v)}]}` },
+      { key:'wave_x_f', label:'wave X freq', min:0, max:5, step:0.5, cmd:null },
+      { key:'wave_x_a', label:'wave X amp', min:0, max:5, step:0.5, cmd:null },
+      { key:'wave_y_f', label:'wave Y freq', min:0, max:5, step:0.5, cmd:null },
+      { key:'wave_y_a', label:'wave Y amp', min:0, max:5, step:0.5, cmd:null },
+    ],
+    [],
+  ];
+
+  const btn2Hints = [
+    'press → draw_grid_vertical()  ·  release → draw_grid_horizontal()',
+    'press → start_circle_drawing()  ·  release → go_to_home()',
+    'press → draw_squares_vertical()  ·  release → draw_squares_horizontal()',
+    'press → draw_radial()  ·  release → draw_radial() again',
+  ];
+
+  // ---------- DOM refs ----------
+  const $ = id => document.getElementById(id);
+
+  function setMode(m) {
+    if (drawing) return;
+    mode = m;
+    document.querySelectorAll('.mode-tab').forEach((b,i)=>b.classList.toggle('active', i===m));
+    $('canvas-label').textContent = modeNames[m];
+    $('btn-hint').textContent = btn2Hints[m];
+    renderControls();
+    sendCmd(`{"name":"set_pattern_mode","args":[${m}]}`, true);
+    rebuildStrokes();
+  }
+
+  function renderControls() {
+    const pc = $('pot-controls');
+    pc.innerHTML = potDefs[mode].map(c => {
+      const type = POT_TYPE[c.key];
+      return `
+      <div class="ctrl-row">
+        <div class="ctrl-head">
+          <span class="ctrl-port">${c.port}</span>
+          <span class="ctrl-val" id="av_${c.key}">${c.fmt(analog[c.key])}</span>
+        </div>
+        <div class="ctrl-fn">${c.fn}</div>
+        <input type="range" class="${type}-pot" data-pot="${c.key}" min="${c.min}" max="${c.max}" step="${c.step}" value="${analog[c.key]}">
+      </div>`;
+    }).join('');
+    pc.querySelectorAll('input[data-pot]').forEach(inp => {
+      inp.addEventListener('input', () => onPot(inp.dataset.pot, parseFloat(inp.value)));
+    });
+
+    const sc = $('serial-controls');
+    const defs = serialDefs[mode];
+    if (!defs.length) { sc.innerHTML = '<div style="font-size:11px;color:var(--muted)">no serial params for radial</div>'; return; }
+    sc.innerHTML = defs.map(c => {
+      const v = serial[c.key];
+      const disp = c.step < 1 ? v.toFixed(2) : Math.round(v);
+      return `
+      <div class="serial-row">
+        <div class="serial-head">
+          <span class="serial-name">${c.label}</span>
+          <span class="serial-val" id="sv_${c.key}">${disp}</span>
+        </div>
+        <input type="range" class="serial-range" data-serial="${c.key}" min="${c.min}" max="${c.max}" step="${c.step}" value="${v}">
+      </div>`;
+    }).join('');
+    sc.querySelectorAll('input[data-serial]').forEach(inp => {
+      inp.addEventListener('input', () => onSerial(inp.dataset.serial, parseFloat(inp.value)));
+    });
+  }
+
+  function setLocked(locked) {
+    document.querySelectorAll('#pot-controls input, #serial-controls input').forEach(s => s.disabled = locked);
+    document.querySelectorAll('.mode-tab').forEach(b => b.disabled = locked);
+    $('locked-badge').classList.toggle('show', locked);
+  }
+
+  function onPot(key, val) {
+    analog[key] = val;
+    const def = potDefs[mode].find(d => d.key === key);
+    $('av_' + key).textContent = def.fmt(val);
+    rebuildStrokes();
+  }
+
+  function onSerial(key, val) {
+    serial[key] = val;
+    const def = serialDefs[mode].find(d => d.key === key);
+    const disp = def.step < 1 ? val.toFixed(2) : Math.round(val);
+    $('sv_' + key).textContent = disp;
+    let cmd = def.cmd ? def.cmd(val) : `{"name":"set_basic_wave","args":[${serial.wave_x_f},${serial.wave_x_a},${serial.wave_y_f},${serial.wave_y_a}]}`;
+    sendCmd(cmd, true);
+    rebuildStrokes();
+  }
+
+  // ---------- Web Serial ----------
+  let serialPort = null;
+  let serialWriter = null;
+  let serialConnected = false;
+  const encoder = new TextEncoder();
+
+  async function connectSerial() {
+    if (serialConnected) { await disconnectSerial(); return; }
+    if (!('serial' in navigator)) {
+      addLog('Web Serial not supported: use Chrome or Edge over https/localhost', false);
+      return;
+    }
+    try {
+      serialPort = await navigator.serial.requestPort();
+      await serialPort.open({ baudRate: 115200 });
+      serialWriter = serialPort.writable.getWriter();
+      serialConnected = true;
+      const btn = $('conn-btn');
+      btn.textContent = 'Disconnect';
+      btn.classList.add('connected');
+      $('status-dot').className = 'dot connected-dot';
+      $('status-text').textContent = 'connected';
+      addLog('serial connected @ 115200', false);
+      addLog('physical board now drives pots + buttons', false);
+      lockPotsForPhysical(true);
+      readLoop();
+    } catch (e) {
+      addLog('connect failed: ' + e.message, false);
+    }
+  }
+
+  async function disconnectSerial() {
+    try {
+      if (serialWriter) { serialWriter.releaseLock(); serialWriter = null; }
+      if (serialPort) { await serialPort.close(); serialPort = null; }
+    } catch (e) {}
+    serialConnected = false;
+    const btn = $('conn-btn');
+    btn.textContent = 'Connect';
+    btn.classList.remove('connected');
+    $('status-dot').className = 'dot';
+    $('status-text').textContent = 'idle';
+    lockPotsForPhysical(false);
+    addLog('serial disconnected', false);
+  }
+
+  // when connected, pots + mode tabs + buttons are mirrors of the physical board
+  function lockPotsForPhysical(locked) {
+    document.querySelectorAll('#pot-controls input').forEach(s => s.disabled = locked);
+    document.querySelectorAll('.mode-tab').forEach(b => b.disabled = locked);
+    $('btn-motor').style.opacity = locked ? '0.55' : '1';
+    $('btn-motor').style.pointerEvents = locked ? 'none' : 'auto';
+    $('btn2').style.opacity = locked ? '0.55' : '1';
+    $('btn2').style.pointerEvents = locked ? 'none' : 'auto';
+  }
+
+  async function readLoop() {
+    // read state lines from Teensy and mirror the physical board
+    try {
+      const reader = serialPort.readable.getReader();
+      const dec = new TextDecoder();
+      let buf = '';
+      while (serialConnected) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value);
+        let nl;
+        while ((nl = buf.indexOf('\n')) >= 0) {
+          const line = buf.slice(0, nl).trim();
+          buf = buf.slice(nl + 1);
+          if (line) handleIncoming(line);
+        }
+      }
+      reader.releaseLock();
+    } catch (e) {}
+  }
+
+  // mirror physical board: parse {"a":[...],"mode":M,"motor":x} and {"btn2":"press|release"}
+  let lastStateLog = 0;
+  function handleIncoming(line) {
+    let obj;
+    try { obj = JSON.parse(line); }
+    catch (e) { addLog('rx: ' + line, false); return; }
+
+    // button event from physical board
+    if (obj.btn2 === 'press') { physBtn2Press(); return; }
+    if (obj.btn2 === 'release') { physBtn2Release(); return; }
+
+    // live state frame
+    if (Array.isArray(obj.a)) {
+      // mode change from board
+      if (typeof obj.mode === 'number' && obj.mode !== mode && !drawing) {
+        applyMode(obj.mode);
+      }
+      // analog values (already mapped to each mode's range by the board)
+      const keys = ['a1','a2','a3','a4'];
+      for (let i = 0; i < 4; i++) {
+        if (typeof obj.a[i] === 'number') {
+          analog[keys[i]] = obj.a[i];
+          const el = $('av_' + keys[i]);
+          const def = potDefs[mode].find(d => d.key === keys[i]);
+          if (el && def) el.textContent = def.fmt(obj.a[i]);
+          const sl = document.querySelector(`input[data-pot="${keys[i]}"]`);
+          if (sl) sl.value = obj.a[i];
+        }
+      }
+      // motor state
+      if (typeof obj.motor === 'number') {
+        const on = obj.motor === 1;
+        if (on !== motorOn) { motorOn = on; reflectMotor(); }
+      }
+      rebuildStrokes();
+      // throttle the log so it doesn't flood
+      const now = Date.now();
+      if (now - lastStateLog > 1000) { addLog('rx: ' + line, false); lastStateLog = now; }
+    } else {
+      addLog('rx: ' + line, false);
+    }
+  }
+
+  // mode change without sending a command back (board is the source of truth)
+  function applyMode(m) {
+    mode = m;
+    document.querySelectorAll('.mode-tab').forEach((b,i)=>b.classList.toggle('active', i===m));
+    $('canvas-label').textContent = modeNames[m];
+    $('btn-hint').textContent = btn2Hints[m];
+    renderControls();
+    rebuildStrokes();
+  }
+
+  function reflectMotor() {
+    const btn = $('btn-motor');
+    btn.textContent = motorOn ? 'Button 1: motor on' : 'Button 1: motor off';
+    btn.classList.toggle('motor-on', motorOn);
+  }
+
+  // physical button2 press/release -> drive preview animation + lock
+  function physBtn2Press() {
+    drawing = true;
+    setLocked(true);
+    $('btn2').classList.add('pressing');
+    $('status-dot').className = 'dot drawing';
+    $('status-text').textContent = 'drawing';
+    const acts = ['draw_grid_vertical()','start_circle_drawing()','draw_squares_vertical()','draw_radial()'];
+    addLog('btn2 press → ' + acts[mode], false);
+  }
+  function physBtn2Release() {
+    drawing = false;
+    setLocked(false);
+    $('btn2').classList.remove('pressing');
+    $('status-dot').className = serialConnected ? 'dot connected-dot' : 'dot';
+    $('status-text').textContent = serialConnected ? 'connected' : 'idle';
+    const acts = ['draw_grid_horizontal()','go_to_home()','draw_squares_horizontal()','draw_radial()'];
+    addLog('btn2 release → ' + acts[mode], false);
+  }
+
+  async function writeSerial(text) {
+    if (!serialConnected || !serialWriter) return;
+    try { await serialWriter.write(encoder.encode(text + '\n')); }
+    catch (e) { addLog('write failed: ' + e.message, false); }
+  }
+
+  function sendCmd(cmd, isSerial) {
+    addLog(cmd, isSerial);
+    if (isSerial) writeSerial(cmd);
+  }
+
+  function toggleMotor() {
+    motorOn = !motorOn;
+    const btn = $('btn-motor');
+    btn.textContent = motorOn ? 'Button 1: motor on' : 'Button 1: motor off';
+    btn.classList.toggle('motor-on', motorOn);
+    addLog(motorOn ? 'motor enabled' : 'motor disabled', false);
+  }
+
+  function btn2Press(e) {
+    if (e) e.preventDefault();
+    if (!motorOn) { addLog('motor is off: enable button 1 first', false); return; }
+    drawing = true;
+    setLocked(true);
+    $('btn2').classList.add('pressing');
+    $('status-dot').className = 'dot drawing';
+    $('status-text').textContent = 'drawing';
+    const acts = ['draw_grid_vertical()','start_circle_drawing()','draw_squares_vertical()','draw_radial()'];
+    addLog(acts[mode] + ' triggered', false);
+  }
+
+  function btn2Release() {
+    if (!drawing) return;
+    drawing = false;
+    setLocked(false);
+    $('btn2').classList.remove('pressing');
+    $('status-dot').className = 'dot';
+    $('status-text').textContent = 'idle';
+    const acts = ['draw_grid_horizontal()','go_to_home()','draw_squares_horizontal()','draw_radial()'];
+    addLog(acts[mode] + ' triggered', false);
+  }
+
+  function addLog(text, isSerial) {
+    const list = $('log-list');
+    const div = document.createElement('div');
+    div.className = 'log-entry ' + (isSerial ? 'fresh-serial' : 'fresh-sys');
+    div.textContent = (isSerial ? '→ ' : '· ') + text;
+    list.appendChild(div);
+    list.scrollTop = list.scrollHeight;
+    setTimeout(() => div.className = 'log-entry', 800);
+    if (list.children.length > 100) list.removeChild(list.firstChild);
+  }
+
+  // ---------- stroke generation ----------
+  let strokes = [];
+  let totalLen = 0;
+
+  function canvasSize() {
+    const wrap = $('canvas-wrap');
+    return Math.min(wrap.clientWidth, wrap.clientHeight) - 32;
+  }
+
+  function rebuildStrokes() {
+    const S = canvasSize();
+    if (mode === 0) strokes = buildGrid(S);
+    else if (mode === 1) strokes = buildCircle(S);
+    else if (mode === 2) strokes = buildSquare(S);
+    else if (mode === 3) strokes = buildRadial(S);
+    totalLen = strokes.reduce((s, st) => s + strokeLen(st.pts), 0);
+  }
+
+  function strokeLen(pts) {
+    let L = 0;
+    for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i].x - pts[i-1].x, pts[i].y - pts[i-1].y);
+    return L;
+  }
+
+  function buildGrid(S) {
+    const out = [];
+    const lineCount = Math.round(analog.a1);
+    const area = serial.drawing_area;
+    const spacing_mm = area / lineCount;
+    const lineLength = spacing_mm * (lineCount - 1);
+    const sc = (S * 0.42) / Math.max(area / 2, 1);
+    const zFreq = analog.a2;
+    const wXf = serial.wave_x_f * analog.a4, wXa = serial.wave_x_a * analog.a3;
+    const wYf = serial.wave_y_f * analog.a4, wYa = serial.wave_y_a * analog.a3;
+    for (let i = 0; i < lineCount - 1; i++) {
+      const x0 = (-i * spacing_mm + lineLength / 2) * sc;
+      let cur = [];
+      for (let yy = -lineLength/2; yy <= lineLength/2; yy += 0.8) {
+        const xOff = wXa * Math.sin(2*Math.PI*wXf*(yy/Math.max(area,1))) * sc * 0.5;
+        const penUp = zFreq > 0 && Math.sin(2*Math.PI*zFreq*(yy/Math.max(area,1))*3) > 0;
+        if (penUp) { if (cur.length>1) out.push({pts:cur,color:'b'}); cur=[]; }
+        else cur.push({x: x0 + xOff, y: yy * sc});
+      }
+      if (cur.length>1) out.push({pts:cur,color:'b'});
+    }
+    for (let i = 0; i < lineCount - 1; i++) {
+      const y0 = (-i * spacing_mm + lineLength / 2) * sc;
+      let cur = [];
+      for (let xx = -lineLength/2; xx <= lineLength/2; xx += 0.8) {
+        const yOff = wYa * Math.sin(2*Math.PI*wYf*(xx/Math.max(area,1))) * sc * 0.5;
+        const penUp = zFreq > 0 && Math.sin(2*Math.PI*zFreq*(xx/Math.max(area,1))*3 + 1) > 0;
+        if (penUp) { if (cur.length>1) out.push({pts:cur,color:'r'}); cur=[]; }
+        else cur.push({x: xx * sc, y: y0 + yOff});
+      }
+      if (cur.length>1) out.push({pts:cur,color:'r'});
+    }
+    return out;
+  }
+
+  function buildCircle(S) {
+    // Faithful to draw_circle_loop() + stepdance semantics:
+    //
+    // The simulation steps over TIME (dt per frame), not over angle.
+    // Three sources are mapped INCREMENTAL onto polar_kinematics.input_radius,
+    // so their per-frame increments ADD together:
+    //
+    //   velocity_gen_r : radius += basic_spacing * dt        (constant radial speed -> spiral)
+    //   wave_gen_s     : radius contribution = A_s*sin(2pi*f_s*t)   (spacing variation, TIME based)
+    //   wave_gen_r     : radius contribution = A_r*sin(2pi*f_r*t)   (radius oscillation, TIME based)
+    //
+    // angle is driven by velocity_gen_a (turning speed, rev-equivalent):
+    //   angle += turnSpeed * dt
+    //
+    // KEY: wave_gen frequency is in cycles per SECOND (time), decoupled from angle.
+    // That is why the ripples on the real spiral don't line up turn-to-turn.
+
+    const radialSpeed = serial.basic_spacing;   // velocity_gen_r.speed_units_per_sec
+    const varF = serial.spacing_var_f;           // wave_gen_s.frequency  (Hz)
+    const varA = serial.spacing_var_a;           // wave_gen_s.amplitude
+    const rOscF = analog.a1;                      // wave_gen_r.frequency (Hz)  <- analog_1
+    const rOscA = analog.a3;                      // wave_gen_r.amplitude       <- analog_3
+    const turnSpeed = analog.a4;                  // velocity_gen_a             <- analog_4
+    const zFreq = analog.a2;                      // pen up/down                <- analog_2
+
+    // time march
+    const dt = 1 / 60;            // 60 fps equivalent frame
+    const duration = 26;         // seconds of drawing to render
+    const sc = S * 0.40;
+
+    // accumulators (mimic the generators' internal target_position)
+    let baseRadius = 0;          // from velocity_gen_r integration
+    let angle = 0;               // from velocity_gen_a integration
+
+    // first pass: find max radius for normalization
+    let maxR = 0;
+    {
+      let bR = 0, ang = 0;
+      for (let t = 0; t <= duration; t += dt) {
+        bR += radialSpeed * dt;
+        const wS = varA * Math.sin(2 * Math.PI * varF * t);
+        const wR = rOscA * 0.04 * Math.sin(2 * Math.PI * rOscF * t);
+        const r = bR + wS + wR;
+        if (r > maxR) maxR = r;
+        ang += turnSpeed * dt;
+      }
+    }
+    const norm = maxR > 0 ? 1 / maxR : 1;
+
+    const out = [];
+    let cur = [];
+    let curTurn = 0;
+    for (let t = 0; t <= duration; t += dt) {
+      baseRadius += radialSpeed * dt;
+      const wS = varA * Math.sin(2 * Math.PI * varF * t);
+      const wR = rOscA * 0.04 * Math.sin(2 * Math.PI * rOscF * t);
+      const r = (baseRadius + wS + wR) * norm * sc;
+      angle += turnSpeed * dt * 2 * Math.PI; // turnSpeed in rev/sec -> rad
+
+      const turnIdx = Math.floor(angle / (2 * Math.PI));
+      const col = (turnIdx % 2 === 0) ? 'b' : 'y';   // blue / yellow spiral
+      const penUp = zFreq > 0 && Math.sin(2 * Math.PI * zFreq * t) > 0;
+      if (penUp || col !== curTurn) {
+        if (cur.length > 1) out.push({pts:cur, color: curTurn || 'b'});
+        cur = penUp ? [] : [{ x: r * Math.cos(angle), y: r * Math.sin(angle) }];
+        curTurn = col;
+      } else {
+        cur.push({ x: r * Math.cos(angle), y: r * Math.sin(angle) });
+      }
+    }
+    if (cur.length > 1) out.push({pts:cur, color: curTurn || 'b'});
+    return out;
+  }
+
+  function buildSquare(S) {
+    const out = [];
+    const squareCount = Math.round(analog.a1);
+    const area = serial.drawing_area;
+    const sc = (S * 0.42) / Math.max(area / 2, 1);
+    const zFreq = analog.a2;
+    const wXf = serial.wave_x_f * analog.a4, wXa = serial.wave_x_a * analog.a3;
+    const wYf = serial.wave_y_f * analog.a4, wYa = serial.wave_y_a * analog.a3;
+    function edge(from,to,axis,fixed,wf,wa,ph,color) {
+      let cur = [];
+      const len = Math.max(Math.abs(to-from),1);
+      for (let u = from; u <= to; u += 1) {
+        const off = wa * Math.sin(2*Math.PI*wf*(u/len)+ph) * 0.25;
+        const penUp = zFreq > 0 && Math.sin(2*Math.PI*zFreq*u*0.04+ph) > 0;
+        if (penUp) { if (cur.length>1) out.push({pts:cur,color}); cur=[]; }
+        else if (axis==='h') cur.push({x:u, y:fixed+off});
+        else cur.push({x:fixed+off, y:u});
+      }
+      if (cur.length>1) out.push({pts:cur,color});
+    }
+    for (let i = 1; i <= squareCount; i++) {
+      const half = (i * area / (squareCount*2.0)) * sc;
+      edge(-half,half,'v',-half,wXf,wXa,0,'c');
+      edge(-half,half,'v',+half,wXf,wXa,Math.PI,'c');
+    }
+    for (let i = 1; i <= squareCount; i++) {
+      const half = (i * area / (squareCount*2.0)) * sc;
+      edge(-half,half,'h',-half,wYf,wYa,1,'b');
+      edge(-half,half,'h',+half,wYf,wYa,Math.PI+1,'b');
+    }
+    return out;
+  }
+
+  function buildRadial(S) {
+    const out = [];
+    const lines = Math.round(analog.a1);
+    const area = analog.a4;
+    const deviation = analog.a3;
+    const zFreq = analog.a2;
+    const radialLength = area / 2;
+    const sc = (S * 0.42) / 75;
+    for (let i = 0; i < lines; i++) {
+      const angleBase = 2*Math.PI*i/lines;
+      const angleEnd = angleBase + deviation*Math.PI;
+      const spokeCol = (i % 2 === 0) ? 'r' : 'b';   // alternate red / blue spokes
+      let cur = [];
+      for (let r = 0; r <= radialLength; r += 0.5) {
+        const frac = r / Math.max(radialLength, 0.01);
+        const angle = angleBase + (angleEnd-angleBase)*frac;
+        const penUp = zFreq > 0 && Math.sin(2*Math.PI*zFreq*r*0.1) > 0;
+        if (penUp) { if (cur.length>1) out.push({pts:cur,color:spokeCol}); cur=[]; }
+        else cur.push({x: r*sc*Math.cos(angle), y: r*sc*Math.sin(angle)});
+      }
+      if (cur.length>1) out.push({pts:cur,color:spokeCol});
+    }
+    return out;
+  }
+
+  // ---------- p5 sketch ----------
+  const sketch = (p) => {
+    let progress = 0;
+    const SPEED = 14;
+
+    p.setup = () => {
+      const s = canvasSize();
+      p.createCanvas(s, s);
+      p.strokeWeight(1.2);
+      p.noFill();
+      rebuildStrokes();
+    };
+
+    p.windowResized = () => { const s = canvasSize(); p.resizeCanvas(s, s); rebuildStrokes(); };
+
+    p.draw = () => {
+      p.background(244, 242, 238);
+      p.push();
+      p.translate(p.width/2, p.height/2);
+
+      // axes
+      p.stroke(222, 218, 212); p.strokeWeight(0.5);
+      const r = p.width * 0.47;
+      p.line(-r, 0, r, 0); p.line(0, -r, 0, r);
+
+      // ghost layer
+      p.stroke(205, 200, 192); p.strokeWeight(1);
+      for (const st of strokes) {
+        p.beginShape();
+        for (const pt of st.pts) p.vertex(pt.x, pt.y);
+        p.endShape();
+      }
+
+      // pen layer
+      progress += SPEED;
+      if (totalLen > 0 && progress > totalLen) progress = 0;
+
+      let acc = 0;
+      p.strokeWeight(1.6);
+      for (const st of strokes) {
+        const L = strokeLen(st.pts);
+        const col = PEN_COLORS[st.color] || PEN_COLORS.b;
+        if (acc + L <= progress) {
+          p.stroke(col[0], col[1], col[2], 230);
+          p.beginShape();
+          for (const pt of st.pts) p.vertex(pt.x, pt.y);
+          p.endShape();
+          acc += L;
+        } else if (acc < progress) {
+          const remain = progress - acc;
+          p.stroke(col[0], col[1], col[2], 230);
+          p.beginShape();
+          p.vertex(st.pts[0].x, st.pts[0].y);
+          let segAcc = 0;
+          let penPos = st.pts[0];
+          for (let i = 1; i < st.pts.length; i++) {
+            const d = Math.hypot(st.pts[i].x - st.pts[i-1].x, st.pts[i].y - st.pts[i-1].y);
+            if (segAcc + d <= remain) {
+              p.vertex(st.pts[i].x, st.pts[i].y);
+              penPos = st.pts[i]; segAcc += d;
+            } else {
+              const f = (remain - segAcc) / Math.max(d, 0.001);
+              const px = st.pts[i-1].x + (st.pts[i].x - st.pts[i-1].x) * f;
+              const py = st.pts[i-1].y + (st.pts[i].y - st.pts[i-1].y) * f;
+              p.vertex(px, py); penPos = {x:px, y:py};
+              break;
+            }
+          }
+          p.endShape();
+          p.push(); p.noStroke(); p.fill(col[0], col[1], col[2]);
+          p.circle(penPos.x, penPos.y, 5); p.pop();
+          break;
+        } else break;
+      }
+      p.pop();
+    };
+  };
+
+  // ---------- wire up events ----------
+  $('conn-btn').addEventListener('click', connectSerial);
+  document.querySelectorAll('.mode-tab').forEach(btn => {
+    btn.addEventListener('click', () => setMode(parseInt(btn.dataset.mode)));
+  });
+  $('btn-motor').addEventListener('click', toggleMotor);
+  const b2 = $('btn2');
+  b2.addEventListener('mousedown', btn2Press);
+  b2.addEventListener('mouseup', btn2Release);
+  b2.addEventListener('mouseleave', btn2Release);
+  b2.addEventListener('touchstart', btn2Press, {passive:false});
+  b2.addEventListener('touchend', btn2Release);
+
+  // ---------- init ----------
+  renderControls();
+  $('btn-hint').textContent = btn2Hints[0];
+  new p5(sketch, $('p5-canvas'));
+  addLog('interface ready', false);
+})();
+</script>
+</body>
+</html>
