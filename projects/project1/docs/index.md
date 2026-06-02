@@ -415,7 +415,8 @@ void draw_squares_horizontal() {
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/SYvDYnnxaHw?si=I6wo6qa9VVEw1yqU" frameborder="0" allowfullscreen></iframe>
 
-Transparent platform display - to be continued...
+EoYS display:
+![EoYS](assets/eoys.jpg)
 
 [Digital interface (for pattern preview)](https://creative-motion-control-course.github.io/Team-Cook/projects/project1/code/interface.html)
 
