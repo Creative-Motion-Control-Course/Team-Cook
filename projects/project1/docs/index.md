@@ -118,7 +118,7 @@ We used two buttons and four potentiometers (two sliders and two knobs) as input
 |---------|-----------|------------|-------------|
 | `set_pattern_mode` | `[mode]` | all | Select pattern: 0 grid, 1 circle, 2 square, 3 radial |
 | `set_drawing_area` | `[mm]` | grid, square | Drawing area size in mm (radial area is set by Pot 4) |
-| `set_drawing_velocity` | `[vel]` | grid, square, radial | Drawing speed, range 0–100, recommended 5–40 |
+| `set_drawing_velocity` | `[vel]` | grid, square, radial | Drawing speed, range 0-100, recommended 5-40 |
 | `set_basic_wave` | `[f_x, a_x, f_y, a_y]` | grid, square | Base X/Y wave frequency and amplitude (each ≤ 5); scaled live by Pot 3 and Pot 4 |
 | `set_basic_spacing` | `[spacing]` | circle | Base spacing between spiral turns (set to 0 for concentric circles) |
 | `set_spacing_variation` | `[freq, amp]` | circle | Spacing variation wave: frequency and amplitude |
