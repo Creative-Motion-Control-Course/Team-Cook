@@ -48,7 +48,6 @@ We began by defining the machine setup, the pattern types, the drawing media, an
 
 ## Implementation
 
-
 We initially explored spiral patterns using the wave generators. The system operates in polar coordinates, where both the angle and the radius are driven continuously. To control the motion, we use two velocity generators: one for the angle and one for the radius, and map the output through polar-to-Cartesian kinematics to drive the plotter. In this setup, the plotter first produces spiral patterns. By adding z-axis control to lift the pen at intervals and adjusting the relative speeds of the two velocity generators, we were able to segment the spiral and produce paths that visually similar to concentric circles. By further modifying the z movement, the system can also generate discrete concentric curves or even dots. Then we focused on adding more variations to the spiral pattern, for example, adding extra wave generators in the x and y directions to draw wave curves while the spiral movement. By exploring the mapping methods, we found that the spacing between each circle can also be varied using an extra wave generator, which creates a 3D effect visually. 
 
 However, to add these extra three wave generators, we need to control an extra six parameters, which exceeds the available analog ports right now. To solve this challenge, we reflected on the key parameters users need to control in real-time. Rather than changing the wave's shape in detail while drawing, it's more convenient for the users to think about and decide on the wave's "size" (amplitude) and "speed" (frequency). Thus, we implemented two scaling factors controlled by potentiometers that control the x and y waves' frequency and amplitude separately. 
@@ -94,6 +93,35 @@ To combine everything, we organized each pattern into separate functions and use
 We used two buttons and four potentiometers (two sliders and two knobs) as input controls for adjusting system parameters. One button is used to switch between pattern types, while the other controls the start and stop of the machine.
 
 ![Hardware setup](assets/placeholder.jpg)
+
+### Control Parameters
+
+#### Potentiometers
+
+| Pot | Port | Grid | Circle | Square | Radial |
+|-----|------|------|--------|--------|--------|
+| Pot 1 | analog_1 | line count | radius wave freq | square count | line count |
+| Pot 2 | analog_2 | z-wave freq (pen up/down) | z-wave freq | z-wave freq | z-wave freq |
+| Pot 3 | analog_3 | amplitude scaler | radius wave amplitude | amplitude scaler | angle deviation |
+| Pot 4 | analog_4 | frequency scaler | turning speed | frequency scaler | line length / drawing area |
+
+#### Buttons
+
+| Button | Function |
+|--------|----------|
+| Button 1 | Enable / disable motor |
+| Button 2 | Start drawing (press and release trigger two passes) |
+
+#### Serial Commands (set before drawing)
+
+| Command | Arguments | Applies to | Description |
+|---------|-----------|------------|-------------|
+| `set_pattern_mode` | `[mode]` | all | Select pattern: 0 grid, 1 circle, 2 square, 3 radial |
+| `set_drawing_area` | `[mm]` | grid, square | Drawing area size in mm (radial area is set by Pot 4) |
+| `set_drawing_velocity` | `[vel]` | grid, square, radial | Drawing speed, range 0–100, recommended 5–40 |
+| `set_basic_wave` | `[f_x, a_x, f_y, a_y]` | grid, square | Base X/Y wave frequency and amplitude (each ≤ 5); scaled live by Pot 3 and Pot 4 |
+| `set_basic_spacing` | `[spacing]` | circle | Base spacing between spiral turns (set to 0 for concentric circles) |
+| `set_spacing_variation` | `[freq, amp]` | circle | Spacing variation wave: frequency and amplitude |
 
 ### Code Overview
 
@@ -388,6 +416,9 @@ void draw_squares_horizontal() {
 <iframe width="560" height="315" src="https://www.youtube.com/embed/SYvDYnnxaHw?si=I6wo6qa9VVEw1yqU" frameborder="0" allowfullscreen></iframe>
 
 Transparent platform display - to be continued...
+
+[Digital interface (for pattern preview)](https://creative-motion-control-course.github.io/Team-Cook/projects/project1/code/interface.html)
+
 
 ## Reflection
 
