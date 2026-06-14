@@ -35,7 +35,7 @@ title: Home
 | [Project 1: Interactive Moiré Pattern Plotter](projects/project1/docs/index.md) | *An interactive CNC plotter system* |
 | [Final Project: Proposal](projects/final-project/docs/proposal-final-project.md) | *An interface for paper embroidery* |
 | [Final Project: Mid-point](projects/final-project/docs/mid-point-final-project.md) | *An interface for paper embroidery* |
-| [Final Project: WIP...| *An interface for paper embroidery* |
+| [Final Project: Final Documentation](projects/final-project/docs/final-documentation-final-project.md)| *An interface for paper embroidery* |
 
 
 <!-- Add rows as you complete more projects:
