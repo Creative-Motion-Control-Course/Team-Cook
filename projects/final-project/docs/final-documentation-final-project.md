@@ -455,7 +455,7 @@ void report_overhead() {
 
 ### Artifacts
 <p align = "left">
-<img src = "assets/fi-artifact-test.jpg" height="400" >
+<img src = "assets/fi-artifact-test.JPG" height="400" >
 <img src = "assets/fi-artifact-1.jpg" height="400" >
 <img src = "assets/fi-artifact-2.jpg" height="400" >
 <img src = "assets/fi-artifact-3.jpg" height="400" >
