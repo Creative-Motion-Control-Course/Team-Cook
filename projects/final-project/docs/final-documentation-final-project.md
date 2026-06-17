@@ -52,65 +52,65 @@ We added another two encoders for users to set the starting punch point. Since t
 - Basic module
 
 ```cpp
-/*
-This sketch is for the stepdance basic module of the paper_embroidery peoject
-input includes: 
-1. pantograph (two encoders)
-2. button_1: to identify recording strat/stop
-3. button_2: to enable playback + send signal to the driver_module
-4. slider_1: control the scaling filter when replay
-5. slider_2: control the parsing length (path_length generator)
-*/
-
-#define module_basic 
-#include "stepdance.hpp"
-
-// -- Define Output Ports --
-
-OutputPort output_a;  // Basic Module output port
-
-// -- Define Motion Channels --
-Channel channel_x;
-Channel channel_y;
-Channel channel_z; 
-
-// -- Define Kinematics --
-KinematicsPolarToCartesianOffset polar_kinematics_offset;
-
-// -- Define Encoders --
-Encoder encoder_theta;   //bottom, enc_1
-Encoder encoder_radius;  //top, enc_2
-
-// -- Button Input --
-Button record_button; //D1
-Button play_button; //D2
-
-// -- Analog Input --
-AnalogInput scaling_slider_a1;
-AnalogInput parsing_slider_a2; 
-
-// -- Scaling --
-ScalingFilter2D scaling_filter;
-
-// -- Record & Playback --
-FourTrackRecorder recorder;
-FourTrackPlayer player;
-
-// -- Position Gen --
-PositionGenerator position_gen_x;
-PositionGenerator position_gen_y;
-PositionGenerator position_gen;
-
-// -- TBI---
-TimeBasedInterpolator TBI;
-
-// --other---
-PathLengthGenerator2D path_length_gen;
-float64_t path_length_at_start = 0;
-
-ControlParameter punch_interval;   
-float64_t next_punch_at = 0;
-bool punch_armed = false;
+  /*
+  This sketch is for the stepdance basic module of the paper_embroidery peoject
+  input includes: 
+  1. pantograph (two encoders)
+  2. button_1: to identify recording strat/stop
+  3. button_2: to enable playback + send signal to the driver_module
+  4. slider_1: control the scaling filter when replay
+  5. slider_2: control the parsing length (path_length generator)
+  */
+  
+  #define module_basic 
+  #include "stepdance.hpp"
+  
+  // -- Define Output Ports --
+  
+  OutputPort output_a;  // Basic Module output port
+  
+  // -- Define Motion Channels --
+  Channel channel_x;
+  Channel channel_y;
+  Channel channel_z; 
+  
+  // -- Define Kinematics --
+  KinematicsPolarToCartesianOffset polar_kinematics_offset;
+  
+  // -- Define Encoders --
+  Encoder encoder_theta;   //bottom, enc_1
+  Encoder encoder_radius;  //top, enc_2
+  
+  // -- Button Input --
+  Button record_button; //D1
+  Button play_button; //D2
+  
+  // -- Analog Input --
+  AnalogInput scaling_slider_a1;
+  AnalogInput parsing_slider_a2; 
+  
+  // -- Scaling --
+  ScalingFilter2D scaling_filter;
+  
+  // -- Record & Playback --
+  FourTrackRecorder recorder;
+  FourTrackPlayer player;
+  
+  // -- Position Gen --
+  PositionGenerator position_gen_x;
+  PositionGenerator position_gen_y;
+  PositionGenerator position_gen;
+  
+  // -- TBI---
+  TimeBasedInterpolator TBI;
+  
+  // --other---
+  PathLengthGenerator2D path_length_gen;
+  float64_t path_length_at_start = 0;
+  
+  ControlParameter punch_interval;   
+  float64_t next_punch_at = 0;
+  bool punch_armed = false;
 
 
 void setup() {
