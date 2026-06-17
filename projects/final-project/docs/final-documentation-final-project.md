@@ -50,6 +50,7 @@ We added another two encoders for users to set the starting punch point. Since t
 ### Code
 
 - Basic module
+
 ```cpp
 /*
 This sketch is for the stepdance basic module of the paper_embroidery peoject
@@ -305,6 +306,7 @@ void report_overhead(){
 ```
 
 - Driving module
+
 ```cpp
 #define module_driver
 
