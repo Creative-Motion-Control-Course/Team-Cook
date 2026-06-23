@@ -31,7 +31,7 @@ We laser cut and assembled the workspace base. It has holes for fixing the Stepd
 To decide the dimensions of this workspace, we first placed the pantograph, Stepdance boards, and AxiDraw on a table together. We tested the pantograph in different locations and orientations to maximize its drawing area without hindering the movement of AxiDraw. Then, we transferred our measurements to CAD file while adjusting some details. We also added additional holes (M3 screw size) to the CAD file for future component fixation. After assembling all the components on the workspace board, we glued several feet beneath the board to make sure the height is even.
 
 <img src = "assets/fi-workspace.JPG" height="300" >
-<img src = "assets/fi-workspace-2.JPG" height="300" >
+<img src = "assets/fi-workspace-2.jpg" height="300" >
 
 ### Pantograph
 
@@ -61,14 +61,13 @@ void KinematicsPolarToCartesianOffset::run(){
 
 ```
 
-
 Here are some photos:
 
-<img src = "assets/pantograph-3.JPG" height="300" >
-<img src = "assets/pantograph-4.JPG" height="300" >
-<img src = "assets/pantograph-5.JPG" height="300" >
-<img src = “assets/mapping_diagram.JPG" height="300" >
-<img src = “assets/pantograph_geometry.JPG" height="300" >
+<img src = "assets/pantograph-3.jpg" height="300" >
+<img src = "assets/pantograph-4.jpg" height="300" >
+<img src = "assets/pantograph-5.jpg" height="300" >
+<img src = “assets/mapping_diagram.jpg" height="300" >
+<img src = “assets/pantograph_geometry.jpg" height="300" >
 
 For punching, we use a base module with an SD card, together with the "recording and playback" and "path length generator" functions in the Stepdance library. The system records the length and shape of the drawn path, then plays it back as a series of evenly spaced punch points along that path at the chosen interval.
 
@@ -482,7 +481,7 @@ void report_overhead() {
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TAGec5jo1rk" frameborder="0" allowfullscreen></iframe>
 
 ### Artifacts
-<img src = "assets/fi-artifact-test.jpg" height="300" >
+<img src = "assets/fi-artifact-test.JPG" height="300" >
 <img src = "assets/fi-artifact-1.jpg" height="300" >
 <img src = "assets/fi-artifact-2.jpg" height="300" >
 <img src = "assets/fi-artifact-3.jpg" height="300" >
