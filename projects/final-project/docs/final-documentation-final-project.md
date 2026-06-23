@@ -485,6 +485,7 @@ void report_overhead() {
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TAGec5jo1rk" frameborder="0" allowfullscreen></iframe>
 
 ### Artifacts
+
 <p align = "left">
 <img src = "assets/fi-artifact-test.JPG" height="300" >
 <img src = "assets/fi-artifact-1.jpg" height="300" >
