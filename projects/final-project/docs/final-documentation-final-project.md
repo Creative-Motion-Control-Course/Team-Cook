@@ -30,7 +30,7 @@ We laser cut and assembled the workspace base. It has holes for fixing the Stepd
 
 To decide the dimensions of this workspace, we first placed the pantograph, Stepdance boards, and AxiDraw on a table together. We tested the pantograph in different locations and orientations to maximize its drawing area without hindering the movement of AxiDraw. Then, we transferred our measurements to CAD file while adjusting some details. We also added additional holes (M3 screw size) to the CAD file for future component fixation. After assembling all the components on the workspace board, we glued several feet beneath the board to make sure the height is even.
 
-<P>
+<p align = "left">
 <img src = "assets/fi-workspace.JPG" height="300" >
 <img src = "assets/fi-workspace-2.jpg" height="300" >
 </p>
