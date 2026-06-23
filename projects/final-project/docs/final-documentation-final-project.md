@@ -65,11 +65,13 @@ void KinematicsPolarToCartesianOffset::run(){
 
 Here are some photos:
 
+<p align = "left">
 <img src = "assets/pantograph-3.jpg" height="300" >
 <img src = "assets/pantograph-4.jpg" height="300" >
 <img src = "assets/pantograph-5.jpg" height="300" >
 <img src = "assets/mapping_diagram.jpg" height="300" >
 <img src = "assets/pantograph_geometry.jpg" height="300" >
+</p>
 
 For punching, we use a base module with an SD card, together with the "recording and playback" and "path length generator" functions in the Stepdance library. The system records the length and shape of the drawn path, then plays it back as a series of evenly spaced punch points along that path at the chosen interval.
 
@@ -483,11 +485,13 @@ void report_overhead() {
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TAGec5jo1rk" frameborder="0" allowfullscreen></iframe>
 
 ### Artifacts
+<p align = "left">
 <img src = "assets/fi-artifact-test.JPG" height="300" >
 <img src = "assets/fi-artifact-1.jpg" height="300" >
 <img src = "assets/fi-artifact-2.jpg" height="300" >
 <img src = "assets/fi-artifact-3.jpg" height="300" >
 <img src = "assets/fi-artifact-4.jpg" height="300" >
+</p>
 
 
 ## Limitation
