@@ -79,6 +79,7 @@ We added another two encoders for users to set the starting punch point. Since t
 ### Code
 
 - Basic module
+
 ```cpp
 /*
 This sketch is for the stepdance basic module of the paper_embroidery project
@@ -168,7 +169,7 @@ void setup() {
 
   polar_kinematics_offset.begin(19); //out the offset d value into it (r + h/2)
 
-  // // -- Scaling Filter --
+  // -- Scaling Filter --
   scaling_filter.begin(); //defaults to incremental mode
   //swap x, y when output
   scaling_filter.output_1.map(&channel_y.input_target_position); 
@@ -354,8 +355,6 @@ Channel channel_z;  // AxiDraw "Z" axis --> pen up/down
 // -- Define Kinematics --
 KinematicsCoreXY axidraw_kinematics;
 
- //
-
 // -- define positioning encoders --
 Encoder enc_1;
 Encoder enc_2; 
@@ -480,14 +479,14 @@ void report_overhead() {
 
 ### Working demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=TAGec5jo1rk" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TAGec5jo1rk" frameborder="0" allowfullscreen></iframe>
 
 ### Artifacts
-<img src = "assets/fi-artifact-test.JPG" height="300" >
-<img src = "assets/fi-artifact-1.JPG" height="300" >
-<img src = "assets/fi-artifact-2.JPG" height="300" >
-<img src = "assets/fi-artifact-3.JPG" height="300" >
-<img src = "assets/fi-artifact-4.JPG" height="300" >
+<img src = "assets/fi-artifact-test.jpg" height="300" >
+<img src = "assets/fi-artifact-1.jpg" height="300" >
+<img src = "assets/fi-artifact-2.jpg" height="300" >
+<img src = "assets/fi-artifact-3.jpg" height="300" >
+<img src = "assets/fi-artifact-4.jpg" height="300" >
 
 
 ## Limitation
